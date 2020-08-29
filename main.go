@@ -124,12 +124,16 @@ func runEventLoop(state state, screen tcell.Screen, events chan event) error {
 					return err
 				}
 			case seekBackwardsEvent:
-				if err = seekBackwards(5); err != nil {
-					return err
+				if state.mpdState != stopMPDState {
+					if err = seekBackwards(5); err != nil {
+						return err
+					}
 				}
 			case seekForwardsEvent:
-				if err = seekForwards(5); err != nil {
-					return err
+				if state.mpdState != stopMPDState {
+					if err = seekForwards(5); err != nil {
+						return err
+					}
 				}
 			case redrawEvent:
 				draw(state, screen)
