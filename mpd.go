@@ -20,7 +20,7 @@ const (
 	pauseMPDState
 )
 
-func handleMpdEvents(events chan Event) {
+func handleMpdEvents(events chan event) {
 	for {
 		changes, err := executeMPDCommand("idle")
 		if err != nil {

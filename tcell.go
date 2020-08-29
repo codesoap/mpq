@@ -34,7 +34,7 @@ func emitStr(s tcell.Screen, x, y int, style tcell.Style, str string) {
 	}
 }
 
-func handleTcellEvents(screen tcell.Screen, events chan Event) {
+func handleTcellEvents(screen tcell.Screen, events chan event) {
 	for {
 		switch ev := screen.PollEvent().(type) {
 		case *tcell.EventResize:

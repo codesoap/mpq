@@ -31,10 +31,10 @@ type song struct {
 	track    *int   // the track number within the album; nil if unknown
 }
 
-type Event int
+type event int
 
 const (
-	updateStateEvent Event = iota
+	updateStateEvent event = iota
 	playHighlightedEvent
 	togglePauseEvent
 	deleteHighlightedEvent
@@ -62,7 +62,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	events := make(chan Event)
+	events := make(chan event)
 	go handleTcellEvents(screen, events)
 	go handleMpdEvents(events)
 	if err = runEventLoop(state, screen, events); err != nil {
@@ -73,7 +73,7 @@ func main() {
 	screen.Fini()
 }
 
-func runEventLoop(state state, screen tcell.Screen, events chan Event) error {
+func runEventLoop(state state, screen tcell.Screen, events chan event) error {
 	var err error
 	updateElapsedTicker := time.NewTicker(time.Second)
 	for {
@@ -193,24 +193,22 @@ func getTopbar(state state) string {
 		currentSong, err := getCurrentSong(state)
 		if err != nil {
 			return "playing"
-		} else {
-			return fmt.Sprintf("playing at %02d:%02d / %02d:%02d",
-				int(*state.elapsed)/60,
-				int(*state.elapsed)%60,
-				int(currentSong.duration)/60,
-				int(currentSong.duration)%60)
 		}
+		return fmt.Sprintf("playing at %02d:%02d / %02d:%02d",
+			int(*state.elapsed)/60,
+			int(*state.elapsed)%60,
+			int(currentSong.duration)/60,
+			int(currentSong.duration)%60)
 	case pauseMPDState:
 		currentSong, err := getCurrentSong(state)
 		if err != nil {
 			return "paused"
-		} else {
-			return fmt.Sprintf("paused at %02d:%02d / %02d:%02d",
-				int(*state.elapsed)/60,
-				int(*state.elapsed)%60,
-				int(currentSong.duration)/60,
-				int(currentSong.duration)%60)
 		}
+		return fmt.Sprintf("paused at %02d:%02d / %02d:%02d",
+			int(*state.elapsed)/60,
+			int(*state.elapsed)%60,
+			int(currentSong.duration)/60,
+			int(currentSong.duration)%60)
 	}
 	return "stopped"
 }
