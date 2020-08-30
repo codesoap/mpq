@@ -29,7 +29,7 @@ mpq
 ```
 
 # Adding songs to the queue
-I use a little script called `mqa` (music queue add). it requires `mpc`
+I use a little script called `mqa` (music queue add). It requires `mpc`
 and `fzf`; use `tab` to select songs and `enter` to add them to the
 queue:
 
