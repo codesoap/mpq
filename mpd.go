@@ -233,6 +233,9 @@ func deleteHighlighted(state state) error {
 }
 
 func moveHighlightedUpwards(state *state) error {
+	if len(state.queue) == 0 {
+		return nil
+	}
 	if state.highlighted == 0 {
 		// Can't move over the top. Just ignore.
 		return nil
@@ -244,6 +247,9 @@ func moveHighlightedUpwards(state *state) error {
 }
 
 func moveHighlightedDownwards(state *state) error {
+	if len(state.queue) == 0 {
+		return nil
+	}
 	if state.highlighted >= len(state.queue)-1 {
 		// Can't move below the bottom. Just ignore.
 		return nil
