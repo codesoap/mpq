@@ -260,15 +260,38 @@ func moveHighlightedDownwards(state *state) error {
 	return err
 }
 
-func seekBackwards(seconds int) error {
+func seekBackwards(state state, seconds int) error {
+	if state.mpdState == stopMPDState {
+		return nil
+	}
 	_, err := executeMPDCommand(fmt.Sprintf("seekcur -%d", seconds))
 	return err
 }
 
-func seekForwards(seconds int) error {
-	_, err := executeMPDCommand(fmt.Sprintf("seekcur +%d", seconds))
+func seekForwards(state state, seconds int) error {
+	if state.mpdState == stopMPDState {
+		return nil
+	}
+
+	// Some logic is required here, because mpd behaves weirdly, when
+	// trying to seek across the end of a song:
+	song, err := getCurrentSong(state)
+	if err != nil {
+		return err
+	}
+	remaining := song.duration - *state.elapsed
+	if remaining <= 0.4 {
+		// No need to seek, if the end is almost reached.
+		return nil
+	} else if remaining-0.4 < float32(seconds) {
+		_, err = executeMPDCommand(fmt.Sprintf("seekcur +%f", remaining-0.3))
+	} else {
+		_, err = executeMPDCommand(fmt.Sprintf("seekcur +%d", seconds))
+	}
+
 	if err != nil && strings.Contains(err.Error(), "Decoder failed to seek") {
-		// This seems to happen, when trying to seek across the end of a song.
+		// This seems to happen, when trying to seek shortly after the song
+		// changed.
 		return nil
 	}
 	return err
