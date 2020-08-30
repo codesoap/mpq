@@ -48,21 +48,9 @@ const (
 	quitEvent
 )
 
-const help = `Key bindings:
-q       : quit
-enter   : play highlighted song
-space   : toggle play/pause
-up      : highlight previous song
-down    : highlight next song
-alt-up  : move highlighted song up
-alt-down: move highlighted song down
-left    : seek backwards 5s
-right   : seek forwards 5s
-d       : remove song from queue`
-
 func main() {
 	if len(os.Args) > 1 {
-		fmt.Println(help)
+		fmt.Println(keyBindingInfo)
 		os.Exit(0)
 	}
 

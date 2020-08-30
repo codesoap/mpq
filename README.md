@@ -1,7 +1,7 @@
 ![screenshot of mpq](./screenshot.png)
 
 With mpq you can view and manipulate songs in the mpd queue. These are
-the default key bindings; customize by modifying `tcell.go`:
+the default key bindings; customize by modifying `keys.go`:
 
 ```console
 $ mpq -h
