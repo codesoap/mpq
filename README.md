@@ -3,7 +3,9 @@
 With mpq you can view and manipulate songs in the mpd queue. These are
 the default key bindings; customize by modifying `tcell.go`:
 
-```
+```console
+$ mpq -h
+Key bindings:
 q       : quit
 enter   : play highlighted song
 space   : toggle play/pause
