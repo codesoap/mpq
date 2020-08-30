@@ -48,6 +48,21 @@ selected_uris=$(
 printf '%s\n' "$selected_uris" | mpc add
 ```
 
+## Utilizing songmem
+[songmem](https://github.com/codesoap/songmem/) is another tool I wrote
+to store and analyze the songs I listen to. It can be used, for example,
+to find recommendations for the last heard song and add them to the
+queue with a script like this:
+
+```shell
+#!/usr/bin/env sh
+
+selection=$(songmem --suggestions "$(songmem | head -n1)" | fzf)
+artist="$(printf '%s' "$selection" | awk -F ' - ' '{print $1}')"
+title="$(printf '%s' "$selection" | awk '{i=index($0, " - "); print substr($0, i+3)}')"
+mpc findadd artist "$artist" title "$title"
+```
+
 # Configuring mpd
 Other tasks, like disabling the repeat mode, I just do with `mpc`. My
 config is usually this:
