@@ -12,7 +12,8 @@ alt-up  : move highlighted song up
 alt-down: move highlighted song down
 left    : seek backwards 5s
 right   : seek forwards 5s
-d       : remove song from queue`
+d       : remove song from queue
+c       : clear queue`
 
 func handleKeyEvents(ev *tcell.EventKey, events chan event) {
 	switch ev.Key() {
@@ -41,6 +42,8 @@ func handleKeyEvents(ev *tcell.EventKey, events chan event) {
 			events <- togglePauseEvent
 		case 'd':
 			events <- deleteHighlightedEvent
+		case 'c':
+			events <- clearEvent
 		case 'q':
 			events <- quitEvent
 		}

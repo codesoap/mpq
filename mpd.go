@@ -232,6 +232,11 @@ func deleteHighlighted(state state) error {
 	return err
 }
 
+func clear(state state) error {
+	_, err := executeMPDCommand("clear")
+	return err
+}
+
 func moveHighlightedUpwards(state *state) error {
 	if len(state.queue) == 0 {
 		return nil

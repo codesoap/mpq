@@ -38,6 +38,7 @@ const (
 	playHighlightedEvent
 	togglePauseEvent
 	deleteHighlightedEvent
+	clearEvent
 	highlightPrevEvent
 	highlightNextEvent
 	seekBackwardsEvent
@@ -108,6 +109,10 @@ func runEventLoop(state state, screen tcell.Screen, events chan event) error {
 				}
 			case deleteHighlightedEvent:
 				if err = deleteHighlighted(state); err != nil {
+					return err
+				}
+			case clearEvent:
+				if err = clear(state); err != nil {
 					return err
 				}
 			case highlightPrevEvent:

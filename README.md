@@ -16,6 +16,7 @@ alt-down: move highlighted song down
 left    : seek backwards 5s
 right   : seek forwards 5s
 d       : remove song from queue
+c       : clear queue
 ```
 
 # Installation
