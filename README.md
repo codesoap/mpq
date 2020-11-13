@@ -25,7 +25,8 @@ git clone git@github.com:codesoap/mpq.git
 cd mpq
 go install
 
-# Now you can run mpq:
+# The binary is now at ~/go/bin/mpq. Add ~/go/bin to your $PATH to run
+# go programs easily:
 mpq
 ```
 
