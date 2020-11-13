@@ -22,17 +22,11 @@ const (
 
 func handleMpdEvents(events chan event) {
 	for {
-		changes, err := executeMPDCommand("idle")
+		_, err := executeMPDCommand("idle playlist player")
 		if err != nil {
 			return
 		}
-		for _, line := range strings.Split(changes, "\n") {
-			if strings.Contains(line, "playlist") ||
-				strings.Contains(line, "player") {
-				events <- updateStateEvent
-				break
-			}
-		}
+		events <- updateStateEvent
 	}
 }
 
