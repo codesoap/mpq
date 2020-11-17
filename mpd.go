@@ -56,18 +56,27 @@ func fillQueue(state *state) error {
 		return err
 	}
 	var s song
+	var file, title, artist, album string
+	var track *int
 	for _, line := range strings.Split(info, "\n") {
 		split := strings.SplitN(line, ": ", 2)
 		switch split[0] {
 		case "file":
-			if len(s.uri) > 0 {
+			if len(file) > 0 {
+				s.displayName = composeDisplayName(file, title, artist, album, track)
 				state.queue = append(state.queue, s)
-				s = song{} // reset, before parsing the next song
+
+				// Reset before parsing the next song:
+				file = ""
+				title = ""
+				artist = ""
+				album = ""
+				track = nil
 			}
 			if len(split) < 2 {
 				return fmt.Errorf("encountered empty URI")
 			}
-			s.uri = split[1]
+			file = split[1]
 		case "Id":
 			if len(split) > 1 {
 				if s.songID, err = strconv.Atoi(split[1]); err != nil {
@@ -84,15 +93,15 @@ func fillQueue(state *state) error {
 			}
 		case "Title":
 			if len(split) > 1 {
-				s.title = split[1]
+				title = split[1]
 			}
 		case "Artist":
 			if len(split) > 1 {
-				s.artist = split[1]
+				artist = split[1]
 			}
 		case "Album":
 			if len(split) > 1 {
-				s.album = split[1]
+				album = split[1]
 			}
 		case "Track":
 			if len(split) > 1 {
@@ -100,14 +109,26 @@ func fillQueue(state *state) error {
 				if err != nil {
 					return fmt.Errorf("could not parse track: %s", err.Error())
 				}
-				s.track = &i
+				track = &i
 			}
 		}
 	}
-	if len(s.uri) > 0 {
+	if len(file) > 0 {
+		s.displayName = composeDisplayName(file, title, artist, album, track)
 		state.queue = append(state.queue, s) // add last song to queue
 	}
 	return nil
+}
+
+func composeDisplayName(file, title, artist, album string, track *int) string {
+	if title == "" {
+		return fmt.Sprintf("%s", file)
+	} else if artist == "" {
+		return fmt.Sprintf("%s", title)
+	} else if track == nil || album == "" {
+		return fmt.Sprintf("%s - %s", artist, title)
+	}
+	return fmt.Sprintf("[#%02d of %s] %s - %s", *track, album, artist, title)
 }
 
 func getMPDState(status string) (mpdState mpdState, err error) {

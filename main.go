@@ -22,13 +22,9 @@ type state struct {
 }
 
 type song struct {
-	uri      string // the URI/file; only used as fallback title
-	songID   int
-	duration float32
-	artist   string // "" if unknown
-	title    string // "" if unknown
-	album    string // "" if unknown
-	track    *int   // the track number within the album; nil if unknown
+	songID      int
+	duration    float32
+	displayName string
 }
 
 type event int
@@ -177,21 +173,11 @@ func draw(state state, screen tcell.Screen) {
 		if state.songID != nil && *state.songID == s.songID {
 			emitStr(screen, 0, i+1, tcell.StyleDefault, ">")
 		}
-		var line string
-		if s.title == "" {
-			line = fmt.Sprintf("%s", s.uri)
-		} else if s.artist == "" {
-			line = fmt.Sprintf("%s", s.title)
-		} else if s.track == nil || s.album == "" {
-			line = fmt.Sprintf("%s - %s", s.artist, s.title)
-		} else {
-			line = fmt.Sprintf("[#%02d of %s] %s - %s", *s.track, s.album, s.artist, s.title)
-		}
 		dur := fmt.Sprintf("%02d:%02d ", int(s.duration)/60, int(s.duration)%60)
 		if i == state.highlighted {
-			emitStr(screen, 2, i+1, tcell.StyleDefault.Reverse(true), dur+line)
+			emitStr(screen, 2, i+1, tcell.StyleDefault.Reverse(true), dur+s.displayName)
 		} else {
-			emitStr(screen, 2, i+1, tcell.StyleDefault, dur+line)
+			emitStr(screen, 2, i+1, tcell.StyleDefault, dur+s.displayName)
 		}
 	}
 	screen.Show()
