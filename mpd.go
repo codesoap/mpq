@@ -65,7 +65,7 @@ func fillQueue(state *state) error {
 				s = song{} // reset, before parsing the next song
 			}
 			if len(split) < 2 {
-				return fmt.Errorf("encountered epmty URI")
+				return fmt.Errorf("encountered empty URI")
 			}
 			s.uri = split[1]
 		case "Id":
