@@ -245,6 +245,10 @@ func deleteHighlighted(state state) error {
 	}
 	song := state.queue[state.highlighted]
 	_, err := executeMPDCommand(fmt.Sprintf("deleteid %d", song.songID))
+	if err != nil && strings.Contains(err.Error(), "No such song") {
+		// This usually happens when pressing the delete button too quickly.
+		return nil
+	}
 	return err
 }
 
