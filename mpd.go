@@ -188,7 +188,8 @@ func executeMPDCommand(command string) (resp string, err error) {
 		if line == "OK\n" {
 			break
 		} else if strings.HasPrefix(line, "ACK ") {
-			err = fmt.Errorf("received mpd error %s", line)
+			msg := "received mpd error '%s' while executing '%s'"
+			err = fmt.Errorf(msg, strings.TrimSpace(line), command)
 			break
 		} else {
 			respBuilder.WriteString(line)
