@@ -40,14 +40,13 @@ queue:
 
 alias mpc='mpc -f "%file%\t[%artist% - ][%album% [#[##%track%#] ]- ][%title%|%file%]"'
 songs=$(mpc listall | sort -V)
-selections=$(printf '%s\n' "$songs" | awk -F'\t' '{print $2}' | fzf --no-sort --reverse -m)
-selected_uris=$(
-	printf '%s\n' "$selections" | while read selection
-	do
-		printf '%s\n' "$songs" | grep -F "$selection" | awk -F'\t' '{print $1; exit}'
-	done
-)
-printf '%s\n' "$selected_uris" | mpc add
+printf '%s\n' "$songs" \
+| awk -F'\t' '{print $2}' \
+| fzf --no-sort --reverse -m \
+| while read selection
+do
+	printf '%s\n' "$songs" | awk -F'\t' "\$2==\"$selection\" {print \$1; exit}"
+done | mpc add
 ```
 
 ## Utilizing songmem
