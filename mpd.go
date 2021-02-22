@@ -265,7 +265,7 @@ func moveHighlightedUpwards(state *state) error {
 		// Can't move over the top. Just ignore.
 		return nil
 	}
-	cmd := fmt.Sprintf("move %d %d\n", state.highlighted, state.highlighted-1)
+	cmd := fmt.Sprintf("move %d %d", state.highlighted, state.highlighted-1)
 	state.highlighted -= 1
 	_, err := executeMPDCommand(cmd)
 	return err
@@ -279,7 +279,7 @@ func moveHighlightedDownwards(state *state) error {
 		// Can't move below the bottom. Just ignore.
 		return nil
 	}
-	cmd := fmt.Sprintf("move %d %d\n", state.highlighted, state.highlighted+1)
+	cmd := fmt.Sprintf("move %d %d", state.highlighted, state.highlighted+1)
 	state.highlighted += 1
 	_, err := executeMPDCommand(cmd)
 	return err
