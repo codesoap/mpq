@@ -6,17 +6,17 @@ the default key bindings; customize by modifying `keys.go`:
 ```console
 $ mpq -h
 Key bindings:
-q       : quit
-enter   : play highlighted song
-space   : toggle play/pause
-up      : highlight previous song
-down    : highlight next song
-alt-up  : move highlighted song up
-alt-down: move highlighted song down
-left    : seek backwards 5s
-right   : seek forwards 5s
-d       : remove song from queue
-c       : clear queue
+q          : quit
+enter      : play highlighted song
+space      : toggle play/pause
+up,k       : highlight previous song
+down,j     : highlight next song
+alt+up/k   : move highlighted song up
+alt+down/j : move highlighted song down
+left,h     : seek backwards 5s
+right,l    : seek forwards 5s
+d          : remove song from queue
+c          : clear queue
 ```
 
 # Installation
