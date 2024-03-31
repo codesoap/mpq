@@ -3,17 +3,17 @@ package main
 import "github.com/gdamore/tcell"
 
 const keyBindingInfo = `Key bindings:
-q          : quit
-enter      : play highlighted song
-space      : toggle play/pause
-up,k       : highlight previous song
-down,j     : highlight next song
-alt+up/k   : move highlighted song up
-alt+down/j : move highlighted song down
-left,h     : seek backwards 5s
-right,l    : seek forwards 5s
-d          : remove song from queue
-c          : clear queue`
+q         : quit
+enter     : play highlighted song
+space     : toggle play/pause
+up, k     : highlight previous song
+down, j   : highlight next song
+alt+up/k  : move highlighted song up
+alt+down/j: move highlighted song down
+left, h   : seek backwards 5s
+right, l  : seek forwards 5s
+d         : remove song from queue
+c         : clear queue`
 
 func handleKeyEvents(ev *tcell.EventKey, events chan event) {
 	switch ev.Key() {
