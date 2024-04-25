@@ -1,6 +1,6 @@
 package main
 
-import "github.com/gdamore/tcell"
+import "github.com/gdamore/tcell/v2"
 
 const keyBindingInfo = `Key bindings:
 q         : quit

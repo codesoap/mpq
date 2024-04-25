@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/gdamore/tcell"
+	"github.com/gdamore/tcell/v2"
 	"os"
 	"time"
 )
@@ -158,11 +158,13 @@ func updateElapsed(state *state) bool {
 	return false
 }
 
-/* How it could look:
-Paused at 01:18 / 02:15
-  03:43 [#4 of Meddle] Pink Floyd - San Tropez
-> 02:15 [#5 of Meddle] Pink Floyd - Seamus
-  23:35 [#6 of Meddle] Pink Floyd - Echoes
+/*
+How it could look:
+
+	Paused at 01:18 / 02:15
+	  03:43 [#4 of Meddle] Pink Floyd - San Tropez
+	> 02:15 [#5 of Meddle] Pink Floyd - Seamus
+	  23:35 [#6 of Meddle] Pink Floyd - Echoes
 */
 func draw(state state, screen tcell.Screen) {
 	screen.Clear()
